@@ -141,10 +141,10 @@
             <tbody>
                 @foreach ($projandprods as $product)
                     @php
-                        if ($product->cpe > 0) {
-                            $tempCpe = $product->total - ($product->total * $product->cpe) / 100;
-                            $valorCpe += $tempCpe;
-                        }
+                    if($product->cpe > 0){
+                        $tempCpe = $product->total - (($product->total * $product->cpe) / 100);
+                        $valorCpe += $tempCpe;
+                    }
                     @endphp
                     <tr>
                         <th>
@@ -170,7 +170,7 @@
                             </div>
                         </td>
                         <td>{{ $product->cpe }}%</td>
-                        <td>@if ($product->cpe > 0) {{ 'R$ ' . number_format($tempCpe, 2, ',', '.') }} @endif</td>
+                        <td>@if($product->cpe > 0) {{ 'R$ ' . number_format($tempCpe, 2, ',', '.') }} @endif</td>
                         <td>
                             <div class="d-flex">
                                 <div class="mx-3">
@@ -181,6 +181,15 @@
                             </div>
                         </td>
                     </tr>
+                    @php
+                        if ($product->products->tipo == 'serviço') {
+                            $valorServico += $product->total * $product->quantidade;
+                        } else {
+                            $valorProduto += $product->total * $product->quantidade;
+                        }
+
+                        $valorTotal += $product->total * $product->quantidade;
+                    @endphp
                 @endforeach
 
 
@@ -283,7 +292,7 @@
                 $(this).removeClass('inputEdit');
                 $(this).html(
                     `<input type="text" class="form-control inputedit" value="${$(this).text().replace('R$ ', '')}">`
-                );
+                    );
                 if ($(this).data('mascara') == 'true') {
                     $(".inputedit").maskMoney({
                         allowNegative: true,
