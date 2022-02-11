@@ -56,7 +56,7 @@
                                             <option value="produto" @if ($product->tipo == 'produto' )
                                                 selected
                                             @endif>Produto</option>
-                                            <option value="serviço" @if ($product->tipo == 'servico' )
+                                            <option value="serviço" @if ($product->tipo == 'serviço' )
                                                 selected
                                             @endif>Serviço</option>
                                         </select>
