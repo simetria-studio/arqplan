@@ -131,6 +131,7 @@
                     <th scope="col">Valor</th>
                     <th scope="col">Quantidade</th>
                     <th scope="col">UN</th>
+                    <th scope="col">Total</th>
                     <th scope="col">Ações</th>
                     <th scope="col">CPE %</th>
                     <th scope="col">Valor cpe</th>
@@ -155,6 +156,7 @@
                         <td class="inputEdit" data-product="{{ $product->id }}" data-collum="quantidade">
                             {{ $product->quantidade }}</td>
                         <td>{{ $product->products->unidade }}</td>
+                        <td>{{ 'R$ ' . number_format($product->total * $product->quantidade, 2, ',', '.') }}</td>
 
                         <td>
                             <div class="d-flex">
@@ -166,7 +168,7 @@
                             </div>
                         </td>
                         <td>{{ $product->cpe }}%</td>
-                        <td>{{ 'R$ ' . number_format($tempCpe, 2, ',', '.') }}</td>
+                        <td>@if($product->cpe) {{ 'R$ ' . number_format($tempCpe, 2, ',', '.') }} @endif</td>
                         <td>
                             <div class="d-flex">
                                 <div class="mx-3">
@@ -177,15 +179,7 @@
                             </div>
                         </td>
                     </tr>
-                    @php
-                        if ($product->products->tipo == 'serviço') {
-                            $valorServico += $product->total * $product->quantidade;
-                        } else {
-                            $valorProduto += $product->total * $product->quantidade;
-                        }
 
-                        $valorTotal += $product->total * $product->quantidade;
-                    @endphp
                 @endforeach
 
 
