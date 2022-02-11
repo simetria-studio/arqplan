@@ -43,7 +43,7 @@ class ProdutosToProjectsController extends Controller
 
         if ($product->tipo == 'produto') {
             $valor1 = $product->price;
-        } elseif ($product->tipo == 'servico') {
+        } elseif ($product->tipo == 'serviço') {
             $valor2 = $product->price;
         }
         // dd($product);
