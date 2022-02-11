@@ -150,3 +150,8 @@ Route::post('/product/add', 'ProdutosToProjectsController@store')->name('product
 Route::post('/product/update', 'ProdutosToProjectsController@update')->name('product.project.update')->middleware('auth');
 Route::any('/product/delete/{id}', 'ProdutosToProjectsController@destroy')->name('product.project.delete')->middleware('auth');
 Route::post('/produtos/cpe', 'ProdutosToProjectsController@cpe')->name('products.update.cpe')->middleware('auth');
+
+
+Route::get('unidades', 'UnidadesController@index')->name('unidades')->middleware('auth');
+Route::get('unidades/create', 'UnidadesController@create')->name('unidades.create')->middleware('auth');
+Route::post('unidades/store', 'UnidadesController@store')->name('unidades.store')->middleware('auth');

@@ -81,6 +81,12 @@
 
                                 <ul aria-expanded="false" class="collapse first-level base-level-line">
                                     <li class="sidebar-item">
+                                        <a href="{{ route('unidades') }}" class="sidebar-link"><i
+                                                data-feather="clipboard" class="feather-icon"></i><span
+                                                class="hide-menu"> Unidades
+                                            </span></a>
+                                    </li>
+                                    <li class="sidebar-item">
                                         <a href="{{ route('categories') }}" class="sidebar-link"><i
                                                 data-feather="clipboard" class="feather-icon"></i><span
                                                 class="hide-menu"> Categorias

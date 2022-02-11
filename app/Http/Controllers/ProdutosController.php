@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Project;
+use App\Models\Unidade;
 use App\Models\Category;
 use App\Models\Provider;
 use Illuminate\Http\Request;
@@ -32,6 +33,7 @@ class ProdutosController extends Controller
     public function create()
     {
         $categories = Category::where('user_id', Auth::user()->company->id)->get();
+        $unidades = Unidade::where('company_id', Auth::user()->company->id)->get();
         $fornecedores = Provider::get();
         return view('product.create', get_defined_vars());
     }
@@ -86,6 +88,7 @@ class ProdutosController extends Controller
     public function show($id)
     {
         $product = Product::find($id);
+        $unidades = Unidade::where('company_id', Auth::user()->company->id)->get();
         $categories = Category::where('user_id', Auth::user()->company->id)->get();
         $fornecedores = Provider::get();
         return view('product.edit', get_defined_vars());

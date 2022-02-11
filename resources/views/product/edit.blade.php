@@ -46,13 +46,9 @@
                                     <div class="form-group col-md-3">
                                         <label for="exampleFormControlSelect1">Unidade de Venda</label>
                                         <select class="form-control" name="unidade" id="exampleFormControlSelect1">
-                                            <option>- Selecione uma opção -</option>
-                                            <option value="Peça" @if ($product->unidade == 'Peça' )
-                                                selected
-                                            @endif>Peça</option>
-                                            <option value="Metro" @if ($product->unidade == 'Metro' )
-                                                selected
-                                            @endif>Metro</option>
+                                            @foreach ($unidades as $unidade)
+                                            <option value="{{ $unidade->name }}" @if($unidade->name == $product->unidade) selected @endif>{{ $unidade->name }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                     <div class="form-group col-md-3">
