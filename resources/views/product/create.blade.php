@@ -35,7 +35,13 @@
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label for="exampleInputEmail1">Fornecedor</label>
-                                        <input type="text" name="fornecedor" class="form-control" placeholder="Fornecedor do produto">
+                                        <select class="form-control" name="fornecedor" id="exampleFormControlSelect1">
+                                            <option>- Selecione uma opção -</option>
+                                            @foreach ($fornecedores as $fornecedor)
+                                            <option value="{{ $fornecedor->name }}">{{ $fornecedor->name }}</option>
+                                            @endforeach
+
+                                        </select>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label for="exampleFormControlSelect1">Unidade de Venda</label>
@@ -74,8 +80,8 @@
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label for="exampleFormControlSelect1">Categoria</label>
-                                        <select class="form-control" name="categoria" id="type">
-                                            <option>- Selecione uma opção -</option>
+                                        <select class="form-control selectpicker" name="categoria" data-live-search="true" id="type">
+                                            {{-- <option>- Selecione uma opção -</option> --}}
                                             @foreach ($categories as $cat)
                                                 <option value="{{ $cat->id }}">{{ $cat->name }}</option>
                                             @endforeach
@@ -83,10 +89,7 @@
 
                                         </select>
                                     </div>
-                                    <div class="form-group col-md-3">
-                                        <label for="exampleInputEmail1">Quantidade</label>
-                                        <input type="text" name="quantidade" class="form-control" placeholder="Quantidade do produto">
-                                    </div>
+                           
                                 </div>
                             </div> <input type="button" name="next" class="next action-button btn btn-dark float-right"
                                 value="Próximo" />
@@ -146,7 +149,8 @@
                 if ($(this).val() == 'produto') {
                     $('#atributo').removeClass('d-none');
                 }
-            })
+            });
+            $('.selectpicker').selectpicker();
 
         });
     </script>

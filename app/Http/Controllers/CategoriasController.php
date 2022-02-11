@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CategoriasController extends Controller
 {
@@ -14,7 +15,7 @@ class CategoriasController extends Controller
      */
     public function index()
     {
-        $categories = Category::where('user_id', auth()->user()->id)->get();
+        $categories = Category::where('user_id', Auth::user()->company->id)->get();
         return view('category.index', get_defined_vars());
     }
 
@@ -39,7 +40,7 @@ class CategoriasController extends Controller
     {
         $dados = Category::create([
             'name' => $request->input('name'),
-            'user_id' => auth()->user()->id,
+            'user_id' => Auth::user()->company->id,
         ]);
 
         $request->session()->flash('message', 'Categoria criada com sucesso!');

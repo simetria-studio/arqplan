@@ -141,6 +141,7 @@ Route::any('/produtos/delete/{id}', 'ProdutosController@destroy')->name('product
 Route::get('/produtos/ver/{id}', 'ProdutosController@show')->name('products.show')->middleware('auth');
 Route::post('/produtos/update/{id}', 'ProdutosController@update')->name('products.update')->middleware('auth');
 
+
 Route::get('/categorias', 'CategoriasController@index')->name('categories')->middleware('auth');
 Route::get('/categorias/create', 'CategoriasController@create')->name('categories.create')->middleware('auth');
 Route::post('/categorias/store', 'CategoriasController@store')->name('categories.store')->middleware('auth');
@@ -148,3 +149,4 @@ Route::post('/categorias/store', 'CategoriasController@store')->name('categories
 Route::post('/product/add', 'ProdutosToProjectsController@store')->name('product.project')->middleware('auth');
 Route::post('/product/update', 'ProdutosToProjectsController@update')->name('product.project.update')->middleware('auth');
 Route::any('/product/delete/{id}', 'ProdutosToProjectsController@destroy')->name('product.project.delete')->middleware('auth');
+Route::post('/produtos/cpe', 'ProdutosToProjectsController@cpe')->name('products.update.cpe')->middleware('auth');

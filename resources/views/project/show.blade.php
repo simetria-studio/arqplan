@@ -120,6 +120,7 @@
             $valorTotal = 0;
             $valorServico = 0;
             $valorProduto = 0;
+            $valorCpe = 0;
         @endphp
         <table class="table">
             <thead>
@@ -130,12 +131,18 @@
                     <th scope="col">Valor</th>
                     <th scope="col">Quantidade</th>
                     <th scope="col">UN</th>
-                    <th scope="col">CPE</th>
                     <th scope="col">Ações</th>
+                    <th scope="col">CPE %</th>
+                    <th scope="col">Valor cpe</th>
+                    <th scope="col">Delete</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($projandprods as $product)
+                    @php
+                        $tempCpe = $product->total - (($product->total * $product->cpe) / 100);
+                        $valorCpe += $tempCpe;
+                    @endphp
                     <tr>
                         <th>
                             <img style="width: 50px; height: 50px; object-fit: cover;"
@@ -143,26 +150,41 @@
                         </th>
                         <td class="capitalize">{{ $product->products->name }}</td>
                         <td class="capitalize">{{ $product->products->tipo }}</td>
-                        <td>{{ 'R$ ' . number_format($product->total, 2, ',', '.') }} </td>
-                        <td>{{ $product->quantidade }}</td>
+                        <td class="inputEdit" data-product="{{ $product->id }}" data-collum="total"
+                            data-mascara="true">{{ 'R$ ' . number_format($product->total, 2, ',', '.') }} </td>
+                        <td class="inputEdit" data-product="{{ $product->id }}" data-collum="quantidade">
+                            {{ $product->quantidade }}</td>
                         <td>{{ $product->products->unidade }}</td>
-                        <td>{{ $product->cpe }}</td>
+
                         <td>
                             <div class="d-flex">
-                                <div class="mx-3">
-                                   <a href="{{ route('product.project.delete', $product->id) }}"> <button  class="btn btn-primary">Deletar</button></a>
-                                </div>
+
                                 <div>
                                     <button class="btn btn-cyan" data-toggle="modal"
                                         data-dados="{{ json_encode($product) }}" data-target="#modalCpe">CPE</button>
                                 </div>
                             </div>
                         </td>
+                        <td>{{ $product->cpe }}%</td>
+                        <td>{{ 'R$ ' . number_format($tempCpe, 2, ',', '.') }}</td>
+                        <td>
+                            <div class="d-flex">
+                                <div class="mx-3">
+                                    <a href="{{ route('product.project.delete', $product->id) }}"> <button
+                                            class="btn btn-primary">Deletar</button></a>
+                                </div>
+
+                            </div>
+                        </td>
                     </tr>
                     @php
-                        $valorTotal += $product->total;
-                        $valorServico += $product->service;
-                        $valorProduto += $product->product * $product->quantidade;
+                        if ($product->products->tipo == 'serviço') {
+                            $valorServico += $product->total * $product->quantidade;
+                        } else {
+                            $valorProduto += $product->total * $product->quantidade;
+                        }
+
+                        $valorTotal += $product->total * $product->quantidade;
                     @endphp
                 @endforeach
 
@@ -178,6 +200,9 @@
             </div>
             <div>
                 <h6>Total de Produtos: {{ 'R$ ' . number_format($valorProduto, 2, ',', '.') }}</h6>
+            </div>
+            <div>
+                <h6>Valor total CPE: {{ 'R$ ' . number_format($valorCpe, 2, ',', '.') }}</h6>
             </div>
 
         </div>
@@ -198,7 +223,8 @@
                         <div class="row">
                             <div class="form-group col-md-12">
                                 <label for="exampleFormControlSelect1">Selecione o Produto</label>
-                                <select class="form-control" name="product_id" id="prod">
+                                <select class="form-control selectpicker" data-live-search="true" name="product_id"
+                                    id="prod">
                                     @foreach ($products as $product)
                                         <option value="{{ $product->id }}" data-tipo="{{ $product->tipo }}">
                                             {{ $product->name }}
@@ -207,9 +233,9 @@
                                 </select>
                             </div>
 
-                            <div id="prodDiv" class="form-group col-md-12 d-none">
+                            <div id="prodDiv" class="form-group col-md-12 ">
                                 <label for="exampleFormControlSelect1">Selecione a quantidade</label>
-                                <input type="text" class="form-control" name="quantidade">
+                                <input type="number" class="form-control" name="quantidade">
                             </div>
                             <input type="hidden" name="project_id" value="{{ $project->id }}">
                         </div>
@@ -232,7 +258,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ route('product.project.update') }}" method="post">
+                <form action="{{ route('products.update.cpe') }}" method="post">
                     @csrf
                     <div class="modal-body">
                         <div>
@@ -257,17 +283,45 @@
 @section('js')
     <script>
         $(document).ready(function() {
-            $(document).ready(function() {
-                $('#prod').on('change', function() {
-                    $('#prodDiv').addClass('d-none');
-                    var option = $(this).find('option:selected').data('tipo');
-                    // console.log(option)
-                    if (option == 'produto') {
-                        $('#prodDiv').removeClass('d-none');
-                    }
-                })
 
+            $(document).on('click', '.inputEdit', function() {
+                $(this).removeClass('inputEdit');
+                $(this).html(
+                    `<input type="text" class="form-control inputedit" value="${$(this).text().replace('R$ ', '')}">`
+                    );
+                if ($(this).data('mascara') == 'true') {
+                    $(".inputedit").maskMoney({
+                        allowNegative: true,
+                        thousands: '.',
+                        decimal: ',',
+                        affixesStay: false
+                    });
+                }
             });
+
+            $(document).on('blur', '.inputedit', function() {
+                var valor = $(this).val();
+                var collum = $(this).parent().data('collum');
+                var id = $(this).parent().data('product');
+
+
+                $(this).parent().addClass('inputEdit');
+                $(this).parent().html($(this).val());
+
+                $.ajax({
+                    url: '/product/update',
+                    type: 'POST',
+                    data: {
+                        collum: collum,
+                        id: id,
+                        value: valor
+                    },
+                    success: function() {
+                        window.location.reload();
+                    }
+                });
+            });
+
             $('[data-target="#modalCpe"]').on('click', function() {
                 var dados = $(this).data('dados');
                 console.log(dados);
@@ -281,6 +335,7 @@
                 //     return `<input type="hidden" name="product_${key}" value="${value}">`;
                 // }))
             });
+            $('select').selectpicker();
         });
     </script>
 

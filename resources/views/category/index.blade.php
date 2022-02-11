@@ -10,7 +10,7 @@
             <a href="{{ route('categories.create') }}"><button class="btn btn-dark">Adicionar Nova Categoria</button></a>
         </div>
         <div class="mt-3 mb-5">
-            <table class="table table-dark">
+            <table class="table">
                 <thead>
                     <tr>
                         <th scope="col">ID</th>

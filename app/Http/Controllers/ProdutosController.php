@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Project;
 use App\Models\Category;
+use App\Models\Provider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,7 +19,8 @@ class ProdutosController extends Controller
     public function index()
     {
         $projects = Project::where('company_id', Auth::user()->company->id)->get();
-        $products = Product::where('user_id', auth()->user()->id)->get();
+        $products = Product::where('user_id', Auth::user()->company->id)->get();
+
         return view('product.index', get_defined_vars());
     }
 
@@ -29,7 +31,8 @@ class ProdutosController extends Controller
      */
     public function create()
     {
-        $categories = Category::where('user_id', auth()->user()->id)->get();
+        $categories = Category::where('user_id', Auth::user()->company->id)->get();
+        $fornecedores = Provider::get();
         return view('product.create', get_defined_vars());
     }
 
@@ -51,7 +54,7 @@ class ProdutosController extends Controller
 
         $dados = Product::create([
 
-            'user_id' => auth()->user()->id,
+            'user_id' => Auth::user()->company->id,
             'code' => $codigo,
             'name' => $request->input('name'),
             'obs' => $request->input('obs'),
@@ -83,7 +86,8 @@ class ProdutosController extends Controller
     public function show($id)
     {
         $product = Product::find($id);
-        $categories = Category::where('user_id', auth()->user()->id)->get();
+        $categories = Category::where('user_id', Auth::user()->company->id)->get();
+        $fornecedores = Provider::get();
         return view('product.edit', get_defined_vars());
     }
 

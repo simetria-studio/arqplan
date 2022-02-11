@@ -56,7 +56,7 @@ class ProjectController extends Controller
         $this->checkAccessArea('PROJECT');
 
         $project = Project::where('company_id', Auth::user()->company->id)->where('code', $request->code)->first();
-        $products = Product::where('user_id', auth()->user()->id)->get();
+        $products = Product::where('user_id', Auth::user()->company->id)->get();
         $projandprods = ProjectToProduct::where('project_id', $project->id)->with('products')->get();
         // dd($projandprods);
 

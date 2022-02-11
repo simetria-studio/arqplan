@@ -19,7 +19,7 @@ $total = 0;
                         <th scope="col">Nome</th>
                         <th scope="col">Tipo</th>
                         <th scope="col">Valor</th>
-                        <th scope="col">Quantidade</th>
+                        {{-- <th scope="col">Quantidade</th> --}}
                         <th scope="col">Ações</th>
                     </tr>
                 </thead>
@@ -33,7 +33,7 @@ $total = 0;
                             <td class="capitalize">{{ $product->name }}</td>
                             <td class="capitalize">{{ $product->tipo }}</td>
                             <td>{{ 'R$ ' . number_format($product->price, 2, ',', '.') }} </td>
-                            <td>{{ $product->quantidade }}</td>
+                            {{-- <td>{{ $product->quantidade }}</td> --}}
                             <td>
                                 <div class="d-flex">
                                     <div class="mx-3">

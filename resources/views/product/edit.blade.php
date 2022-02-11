@@ -35,7 +35,13 @@
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label for="exampleInputEmail1">Fornecedor</label>
-                                        <input type="text" name="fornecedor" value="{{ $product->fornecedor }}" class="form-control" placeholder="Fornecedor do produto">
+                                        <select class="form-control" name="fornecedor" id="exampleFormControlSelect1">
+                                            <option>- Selecione uma opção -</option>
+                                            @foreach ($fornecedores as $fornecedor)
+                                            <option value="{{ $fornecedor->name }}" @if( $fornecedor->name == $product->fornecedor) selected @endif>{{ $fornecedor->name }}</option>
+                                            @endforeach
+
+                                        </select>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label for="exampleFormControlSelect1">Unidade de Venda</label>
@@ -82,8 +88,8 @@
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label for="exampleFormControlSelect1">Categoria</label>
-                                        <select class="form-control" name="categoria" id="type">
-                                            <option>- Selecione uma opção -</option>
+                                        <select class="form-control selectpicker" data-live-search="true" name="categoria" id="type">
+
                                             @foreach ($categories as $cat)
                                                 <option value="{{ $cat->id }}" @if ($cat->id == $product->categoria )
                                                     selected
@@ -93,10 +99,7 @@
 
                                         </select>
                                     </div>
-                                    <div class="form-group col-md-3">
-                                        <label for="exampleInputEmail1">Quantidade</label>
-                                        <input type="text" name="quantidade" value="{{ $product->quantidade }}" class="form-control" placeholder="Quantidade do produto">
-                                    </div>
+
                                 </div>
                             </div> <input type="button" name="next" class="next action-button btn btn-dark float-right"
                                 value="Próximo" />

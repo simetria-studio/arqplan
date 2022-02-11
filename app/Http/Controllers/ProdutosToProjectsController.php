@@ -94,11 +94,27 @@ class ProdutosToProjectsController extends Controller
      */
     public function update(Request $request)
     {
-        $id = $request->input('pj_id');
+        $id = $request->id;
 
+        // dd($request->all());
         $dados = ProjectToProduct::find($id);
+        $value = str_replace(['.', ','], ['', '.'], $request->value);
         $dados->update([
-            'cpe' => $request->input('cpe'),
+
+            $request->collum => $value,
+        ]);
+
+        $request->session()->flash('message', 'CPE Atualizado com sucesso');
+
+        return redirect()->back();
+    }
+    public function cpe(Request $request)
+    {
+        $id = $request->input('pj_id');
+        $dados = ProjectToProduct::find($id);
+
+        $dados->update([
+           'cpe' => $request->cpe,
         ]);
 
         $request->session()->flash('message', 'CPE Atualizado com sucesso');
