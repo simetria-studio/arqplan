@@ -1,0 +1,59 @@
+# Pipelines
+
+trigger:
+- master
+- develop
+
+pr:
+  branches:
+    include:
+      - master
+      - develop
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  phpVersion: 7.3
+
+steps:
+- task: CopyFiles@2
+  displayName: Build
+  inputs:
+    Contents: |
+      **
+      !**/node_modules/**
+      !**/.git/**
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/to_upload'
+
+- task: FtpUpload@2
+  displayName: Upload to Prod
+  condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/master'))
+  inputs:
+    credentialsOption: 'inputs'
+    serverUrl: '$(SERVER)'
+    username: '$(USERNAME)'
+    password: '$(password)'
+    rootDirectory: '$(Build.ArtifactStagingDirectory)/to_upload'
+    filePatterns: |
+        **
+    remoteDirectory: '/public_html/app'
+    clean: false
+    cleanContents: false
+    preservePaths: true
+
+- task: FtpUpload@2
+  displayName: Upload to Dev
+  condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/develop'))
+  inputs:
+    credentialsOption: 'inputs'
+    serverUrl: '$(SERVER)'
+    username: '$(USERNAME)'
+    password: '$(password)'
+    rootDirectory: '$(Build.ArtifactStagingDirectory)/to_upload'
+    filePatterns: |
+        **
+    remoteDirectory: '/public_html/dev'
+    clean: false
+    cleanContents: false
+    preservePaths: true

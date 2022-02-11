@@ -1,0 +1,140 @@
+// Theme colors
+#main-wrapper {
+
+	&[data-layout="vertical"],
+	&[data-layout="horizontal"] {
+		.topbar .top-navbar .navbar-header {
+
+			&[data-logobg="skin6"] {
+				background: $skin6;
+
+				.navbar-brand {
+					width: 100%;
+					height: 100%;
+
+					a{
+						margin: auto;
+					}
+
+					.logo {
+						max-width: 100%;
+    					max-height: $topbar-height;
+						image-rendering: -webkit-optimize-contrast;
+					}
+
+					.dark-logo {
+						display: block;
+					}
+
+					.light-logo {
+						display: none;
+					}
+				}
+
+				.nav-toggler,
+				.topbartoggler {
+					color: $body-color;
+				}
+			}
+		}
+
+		.topbar .navbar-collapse,
+		.topbar {
+			&[data-navbarbg="skin6"] {
+				background: $body-bg;
+			}
+		}
+
+		/*This is for the sidebar bg*/
+		.left-sidebar {
+				&[data-sidebarbg="skin6"] {
+					background: $skin6;
+
+					.sidebar-nav {
+						ul {
+							.list-divider {
+								background: $sidebar-text-dark;
+							}
+
+							.sidebar-item {
+								.sidebar-link {
+									color: $sidebar-text-dark;
+
+									.feather-icon,
+									i {
+										color: $sidebar-icons-dark;
+									}
+								}
+
+								.first-level {
+									.sidebar-item.active {
+										>.sidebar-link.active,
+										>.sidebar-link.active>i {
+											color: $dark;
+										}
+									}
+								}
+
+								&.selected>.sidebar-link {
+									.feather-icon,
+									i {
+										color: $white;
+									}
+								}
+
+								
+							}
+
+							.nav-small-cap {
+								color: $black;
+							}
+						}
+
+						.has-arrow {
+							&::after {
+								border-color: $sidebar-text-dark;
+							}
+						}
+
+						.user-content,
+						.user-name,
+						.user-email {
+							color: $theme-dark;
+						}
+					}
+
+					.sidebar-nav li.selected>.has-arrow::after,
+					.sidebar-nav li.selected>.has-arrow.active::after {
+						border-color: $gray-0;
+					}
+				}
+		}
+	}
+}
+
+.ui-state-highlight { height: 1.5em; line-height: 1.5em; background-color: #DDD; }
+
+.feather-8{
+	width: 8px;
+	height: 8px;
+}
+.feather-16{
+	width: 16px;
+	height: 16px;
+}
+.feather-24{
+	width: 24px;
+	height: 24px;
+}
+.feather-32{
+	width: 32px;
+	height: 32px;
+}
+
+@media print
+{    
+    .no-print, .no-print *
+    {
+        display: none !important;
+    }
+}
