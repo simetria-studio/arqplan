@@ -43,7 +43,7 @@ class ProdutosToProjectsController extends Controller
 
         if ($product->tipo == 'produto') {
             $valor1 = $product->price;
-        } elseif ($product->tipo == 'serviço') {
+        } else {
             $valor2 = $product->price;
         }
         // dd($product);
@@ -119,6 +119,5 @@ class ProdutosToProjectsController extends Controller
         $dados->delete();
 
         return redirect()->back()->with('message', 'Deletado com sucesso!');
-
     }
 }
