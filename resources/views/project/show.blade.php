@@ -168,7 +168,7 @@
                             </div>
                         </td>
                         <td>{{ $product->cpe }}%</td>
-                        <td>@if($product->cpe) {{ 'R$ ' . number_format($tempCpe, 2, ',', '.') }} @endif</td>
+                        <td>@if($product->cpe > 0) {{ 'R$ ' . number_format($tempCpe, 2, ',', '.') }} @endif</td>
                         <td>
                             <div class="d-flex">
                                 <div class="mx-3">
