@@ -81,6 +81,12 @@
 
                                 <ul aria-expanded="false" class="collapse first-level base-level-line">
                                     <li class="sidebar-item">
+                                        <a href="{{ route('products') }}" class="sidebar-link"><i
+                                                data-feather="package" class="feather-icon"></i><span
+                                                class="hide-menu"> Produtos
+                                            </span></a>
+                                    </li>
+                                    <li class="sidebar-item">
                                         <a href="{{ route('unidades') }}" class="sidebar-link"><i
                                                 data-feather="clipboard" class="feather-icon"></i><span
                                                 class="hide-menu"> Unidades
@@ -92,12 +98,7 @@
                                                 class="hide-menu"> Categorias
                                             </span></a>
                                     </li>
-                                    <li class="sidebar-item">
-                                        <a href="{{ route('products') }}" class="sidebar-link"><i
-                                                data-feather="package" class="feather-icon"></i><span
-                                                class="hide-menu"> Produtos
-                                            </span></a>
-                                    </li>
+
                                 </ul>
 
                             </li>

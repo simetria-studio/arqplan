@@ -18,8 +18,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Styles -->
-    <link href="{{ mix('css/tailwindcss.css') }}" rel="stylesheet">
+    {{-- <link href="{{ mix('css/tailwindcss.css') }}" rel="stylesheet"> --}}
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous"> --}}
     <link rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <link rel="stylesheet" href="{{ asset('css/custom.min.css') }}">
