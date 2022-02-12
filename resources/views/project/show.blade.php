@@ -227,7 +227,7 @@
                         <div class="row">
                             <div class="form-group col-md-12">
                                 <label for="exampleFormControlSelect1">Selecione o Produto</label>
-                                <select class="form-control selectpicker" data-live-search="true" name="product_id"
+                                <select class="form-control"  name="product_id"
                                     id="prod">
                                     @foreach ($products as $product)
                                         <option value="{{ $product->id }}" data-tipo="{{ $product->tipo }}">
