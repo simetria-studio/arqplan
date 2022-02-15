@@ -27,18 +27,20 @@
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label for="exampleInputEmail1">Observação</label>
-                                        <input type="text" name="obs" class="form-control" placeholder="observação sobre o produto">
+                                        <input type="text" name="obs" class="form-control"
+                                            placeholder="observação sobre o produto">
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label for="exampleInputEmail1">Valor</label>
-                                        <input type="text" id="valor" name="price" class="form-control" placeholder="Valor do produto">
+                                        <input type="text" id="valor" name="price" class="form-control"
+                                            placeholder="Valor do produto">
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label for="exampleInputEmail1">Fornecedor</label>
                                         <select class="form-control" name="fornecedor" id="exampleFormControlSelect1">
                                             <option>- Selecione uma opção -</option>
                                             @foreach ($fornecedores as $fornecedor)
-                                            <option value="{{ $fornecedor->name }}">{{ $fornecedor->name }}</option>
+                                                <option value="{{ $fornecedor->name }}">{{ $fornecedor->name }}</option>
                                             @endforeach
 
                                         </select>
@@ -47,9 +49,35 @@
                                         <label for="exampleFormControlSelect1">Unidade de Venda</label>
                                         <select class="form-control" name="unidade" id="exampleFormControlSelect1">
                                             <option>- Selecione uma opção -</option>
+                                            <option value="Unidade">Unidade</option>
+                                            <option value="Metro">Metro</option>
+                                            <option value="M²">M²</option>
+                                            <option value="M³">M³</option>
+                                            <option value="CM">CM</option>
+                                            <option value="Horas">Horas</option>
+                                            <option value="KG">KG</option>
+                                            <option value="Gr">Gr</option>
+                                            <option value="Ton">Ton</option>
+                                            <option value="Barra">Barra</option>
+                                            <option value="Bloco">Bloco</option>
+                                            <option value="Bobina">Bobina</option>
+                                            <option value="Caixa">Caixa</option>
+                                            <option value="Cento">Cento</option>
+                                            <option value="Folha">Folha</option>
+                                            <option value="Galão">Galão</option>
+                                            <option value="Kit">Kit</option>
+                                            <option value="Lata Litro">Lata Litro</option>
+                                            <option value="Milheiro">Milheiro</option>
+                                            <option value="Par">Par</option>
+                                            <option value="Palete">Palete</option>
+                                            <option value="Resma">Resma</option>
+                                            <option value="Saco">Saco</option>
+                                            <option value="Tambor">Tambor</option>
                                             @foreach ($unidades as $unidade)
-                                            <option value="{{ $unidade->name }}">{{ $unidade->name }}</option>
+                                                <option value="{{ $unidade->name }}">{{ $unidade->name }}</option>
                                             @endforeach
+
+
                                         </select>
                                     </div>
                                     <div class="form-group col-md-3">
@@ -68,25 +96,46 @@
                                         </div>
                                         <div class="form-group col-md-3">
                                             <label for="exampleInputEmail1">Altura (cm)</label>
-                                            <input type="text" name="altura" class="form-control" placeholder="Fornecedor do produto">
+                                            <input type="text" name="altura" class="form-control"
+                                                placeholder="Fornecedor do produto">
                                         </div>
                                         <div class="form-group col-md-3">
                                             <label for="exampleInputEmail1">Largura (cm)</label>
-                                            <input type="text" name="largura" class="form-control" placeholder="Fornecedor do produto">
+                                            <input type="text" name="largura" class="form-control"
+                                                placeholder="Fornecedor do produto">
                                         </div>
                                         <div class="form-group col-md-3">
                                             <label for="exampleInputEmail1">Comprimento (cm)</label>
-                                            <input type="text" name="comprimento" class="form-control" placeholder="Fornecedor do produto">
+                                            <input type="text" name="comprimento" class="form-control"
+                                                placeholder="Fornecedor do produto">
                                         </div>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label for="exampleFormControlSelect1">Categoria</label>
-                                        <select class="form-control selectpicker" name="categoria" data-live-search="true" id="type">
+                                        <select class="form-control selectpicker" name="categoria" data-live-search="true"
+                                            id="type">
                                             {{-- <option>- Selecione uma opção -</option> --}}
                                             @foreach ($categories as $cat)
                                                 <option value="{{ $cat->id }}">{{ $cat->name }}</option>
                                             @endforeach
-
+                                            <option value="Cadeiras">Cadeiras</option>
+                                            <option value="Mesas de Jantar">Mesas de Jantar</option>
+                                            <option value="Mesas de Centro">Mesas de Centro</option>
+                                            <option value="Mesas Laterais">Mesas Laterais</option>
+                                            <option value="Utensílios">Utensílios</option>
+                                            <option value="Estofados">Estofados</option>
+                                            <option value="Bancos e Banquetas">Bancos e Banquetas</option>
+                                            <option value="Componentes Elétricos">Componentes Elétricos</option>
+                                            <option value="Componentes Hidráulicos">Componentes Hidráulicos</option>
+                                            <option value="Tintas e Solventes">Tintas e Solventes</option>
+                                            <option value="Serviço Interno">Serviço Interno</option>
+                                            <option value="Serviço Terceirizado">Serviço Terceirizado</option>
+                                            <option value="Serviço de Marcenaria">Serviço de Marcenaria</option>
+                                            <option value="Serviço de Hidráulica">Serviço de Hidráulica</option>
+                                            <option value="Serviço de Elétrica">Serviço de Elétrica</option>
+                                            <option value="Pinturas e Reparos">Pinturas e Reparos</option>
+                                            <option value="Terraplanagem">Terraplanagem</option>
+                                            <option value="Refrigeração">Refrigeração</option>
 
                                         </select>
                                     </div>
@@ -140,7 +189,6 @@
             </div>
         </div>
     </div>
-
 @endsection
 @section('js')
     <script>

@@ -132,24 +132,32 @@
                     <th scope="col">Quantidade</th>
                     <th scope="col">UN</th>
                     <th scope="col">Total</th>
-                    <th scope="col">Ações</th>
-                    <th scope="col">CPE %</th>
-                    <th scope="col">Valor cpe</th>
+                    @if (in_array('FINANCE_VIEW', $userFinance->toArray()))
+                        <th scope="col">Ações</th>
+                        <th scope="col">CPE %</th>
+                        <th scope="col">Valor cpe</th>
+                    @endif
                     <th scope="col">Delete</th>
+
+
+
+
                 </tr>
             </thead>
             <tbody>
                 @foreach ($projandprods as $product)
                     @php
-                    if($product->cpe > 0){
-                        $tempCpe = $product->total - (($product->total * $product->cpe) / 100);
-                        $valorCpe += $tempCpe;
-                    }
+                        if ($product->cpe > 0) {
+                            $tempCpe = $product->total - ($product->total * $product->cpe) / 100;
+                            $valorCpe += $tempCpe;
+                        }
                     @endphp
                     <tr>
                         <th>
-                            <img style="width: 50px; height: 50px; object-fit: cover;"
-                                src="{{ asset('storage/product_image/' . $product->products->image) }}" alt="">
+                            <img class="foto" style="width: 50px; height: 50px; object-fit: cover;"
+                                data-toggle="modal" data-target="#modalFoto"
+                                src="{{ asset('storage/product_image/' . $product->products->image) }}" alt=""
+                                data-foto="{{ asset('storage/product_image/' . $product->products->image) }}">
                         </th>
                         <td class="capitalize">{{ $product->products->name }}</td>
                         <td class="capitalize">{{ $product->products->tipo }}</td>
@@ -159,18 +167,24 @@
                             {{ $product->quantidade }}</td>
                         <td>{{ $product->products->unidade }}</td>
                         <td>{{ 'R$ ' . number_format($product->total * $product->quantidade, 2, ',', '.') }}</td>
+                        @if (in_array('FINANCE_VIEW', $userFinance->toArray()))
+                            <td>
+                                <div class="d-flex">
 
-                        <td>
-                            <div class="d-flex">
-
-                                <div>
-                                    <button class="btn btn-cyan" data-toggle="modal"
-                                        data-dados="{{ json_encode($product) }}" data-target="#modalCpe">CPE</button>
+                                    <div>
+                                        <button class="btn btn-cyan" data-toggle="modal"
+                                            data-dados="{{ json_encode($product) }}" data-target="#modalCpe">CPE</button>
+                                    </div>
                                 </div>
-                            </div>
-                        </td>
-                        <td>{{ $product->cpe }}%</td>
-                        <td>@if($product->cpe > 0) {{ 'R$ ' . number_format($tempCpe, 2, ',', '.') }} @endif</td>
+                            </td>
+
+                            <td>{{ $product->cpe }}%</td>
+                            <td>
+                                @if ($product->cpe > 0)
+                                    {{ 'R$ ' . number_format($tempCpe, 2, ',', '.') }}
+                                @endif
+                            </td>
+                        @endif
                         <td>
                             <div class="d-flex">
                                 <div class="mx-3">
@@ -180,6 +194,7 @@
 
                             </div>
                         </td>
+
                     </tr>
                     @php
                         if ($product->products->tipo == 'serviço') {
@@ -227,12 +242,14 @@
                         <div class="row">
                             <div class="form-group col-md-12">
                                 <label for="exampleFormControlSelect1">Selecione o Produto</label>
-                                <select class="form-control"  name="product_id"
-                                    id="prod">
+                                <select class="form-control" name="product_id" id="prod">
                                     @foreach ($products as $product)
                                         <option value="{{ $product->id }}" data-tipo="{{ $product->tipo }}">
                                             {{ $product->name }}
-                                            @if ($product->tipo == 'produto')-->Produto @else-->Serviço @endif</option>
+                                            @if ($product->tipo == 'produto')
+                                            -->Produto @else-->Serviço
+                                            @endif
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -283,6 +300,21 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="modalFoto" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="modalBody">
+
+                </div>
+
+            </div>
+        </div>
+    </div>
 @endsection
 @section('js')
     <script>
@@ -292,7 +324,7 @@
                 $(this).removeClass('inputEdit');
                 $(this).html(
                     `<input type="text" class="form-control inputedit" value="${$(this).text().replace('R$ ', '')}">`
-                    );
+                );
                 if ($(this).data('mascara') == 'true') {
                     $(".inputedit").maskMoney({
                         allowNegative: true,
@@ -339,8 +371,18 @@
                 //     return `<input type="hidden" name="product_${key}" value="${value}">`;
                 // }))
             });
-            $('select').selectpicker();
+            // $('select').selectpicker();
+
+            $('.foto').on('click', function() {
+                var foto = $(this).data('foto');
+                $('#modalBody').html(`<img class="fotoModal" src="${foto}" alt="">`);
+            });
         });
     </script>
+    <style>
+        .fotoModal {
+            width: 100%;
+        }
 
+    </style>
 @endsection

@@ -55,10 +55,13 @@ class ProjectController extends Controller
     {
         $this->checkAccessArea('PROJECT');
 
+       $userFinance = auth()->user()->profiles->map(function($query)
+       { return $query->code; });
+
         $project = Project::where('company_id', Auth::user()->company->id)->where('code', $request->code)->first();
         $products = Product::where('user_id', Auth::user()->company->id)->get();
         $projandprods = ProjectToProduct::where('project_id', $project->id)->with('products')->get();
-        // dd($projandprods);
+// dd(auth()->user()->profiles->map(function($query){ return $query->code;  }));
 
         return view('project.show', get_defined_vars())->with('project', $project)
             ->with('users', $this->getAllUsers())
